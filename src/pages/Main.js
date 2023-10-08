@@ -8,22 +8,29 @@ function App() {
     const center = [40.356843798356444, -74.47332961152759];
 
     function onEachFeature(feature,layer) {
-        layer.on('mouseover', function (layer) {
+        layer.bindPopup(layer.feature.properties.county);
+        layer.on('mouseover', function (feature, layer) {
+            this.openPopup();
+            // alert(this.feature.properties.county)
             this.setStyle({
                 'fillColor': '#0000ff'
             });
         })
         layer.on('mouseout', function () {
+            this.closePopup();
             this.setStyle({
                 'fillColor': '#ffe499'
             });
+        });
+        layer.on('click', function () {
+            window.location.href = ("/" + this.feature.properties.county)
         });
     }
 
     return (
             <MapContainer
                 center={center}
-                zoom={10}
+                zoom={8}
                 style={{ width: '100vw', height: '100vh'}}
             >
 
